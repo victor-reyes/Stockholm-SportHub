@@ -2,11 +2,13 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import Form from "next/form";
+import { Button } from "@/components/ui/button";
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
@@ -23,7 +25,7 @@ export default function Book() {
         </CardHeader>
 
         <CardContent>
-          <Form action="" className="flex flex-col gap-4">
+          <Form action="" id="search_form" className="flex flex-col gap-4">
             <Input
               type="search"
               name="place"
@@ -50,6 +52,11 @@ export default function Book() {
             </div>
           </Form>
         </CardContent>
+        <CardFooter className="flex justify-end">
+          <Button asChild>
+            <input type="submit" form="search_form" value="Search" />
+          </Button>
+        </CardFooter>
       </Card>
     </main>
   );
