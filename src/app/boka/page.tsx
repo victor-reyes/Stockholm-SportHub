@@ -9,6 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Form from "next/form";
 import { Button } from "@/components/ui/button";
+import { searchAction } from "./actions";
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
@@ -25,7 +26,11 @@ export default function Book() {
         </CardHeader>
 
         <CardContent>
-          <Form action="" id="search_form" className="flex flex-col gap-4">
+          <Form
+            action={searchAction}
+            id="search_form"
+            className="flex flex-col gap-4"
+          >
             <Input
               type="search"
               name="place"
