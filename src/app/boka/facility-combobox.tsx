@@ -61,11 +61,7 @@ export function Combobox<T extends { id: string; text: string }>({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline">
-          {selectedItems.length > 0
-            ? selectedItems.map((item) => item.text).join("/")
-            : triggerText}
-        </Button>
+        <Button variant="outline">{triggerText}</Button>
       </PopoverTrigger>
       <PopoverContent>
         <Command shouldFilter={false}>
