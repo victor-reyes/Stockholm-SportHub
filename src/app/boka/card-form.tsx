@@ -39,11 +39,6 @@ export function CardForm() {
           id="search_form"
           className="flex flex-col gap-4"
         >
-          <Input
-            type="search"
-            name="place"
-            placeholder="What place do you want to book?"
-          />
           <Combobox
             items={[...FACILITIES]}
             triggerText="Select facility"
