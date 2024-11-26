@@ -18,11 +18,12 @@ import { Check } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 
-type Props = { facilities: Facility[] };
-type Facility = { id: string; value: string; text: string };
+type Props<T> = { facilities: T[] };
 
-export function FacilityCombobox({ facilities }: Props) {
-  const [checkedFacilities, setCheckedFacilities] = useState<Facility[]>([]);
+export function FacilityCombobox<T extends { id: string; text: string }>({
+  facilities,
+}: Props<T>) {
+  const [checkedFacilities, setCheckedFacilities] = useState(Array<T>());
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
 
