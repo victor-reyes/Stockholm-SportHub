@@ -104,7 +104,6 @@ export function Combobox<T extends { id: string; text: string }>({
                         }
                         return [...prev, item];
                       });
-                      setOpen(false);
                     }}
                   >
                     <CheckItem isChecked={checkedItems.includes(item)} />
