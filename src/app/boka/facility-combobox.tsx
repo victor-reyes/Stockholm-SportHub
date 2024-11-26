@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Command,
   CommandEmpty,
@@ -11,12 +13,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
 type Props = { facilities: Facility[] };
 type Facility = { id: string; value: string; text: string };
 
 export function FacilityCombobox({ facilities }: Props) {
+  const [checkedFacilities, setCheckedFacilities] = useState<Facility[]>([]);
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -29,7 +33,18 @@ export function FacilityCombobox({ facilities }: Props) {
             <CommandEmpty>No facility found.</CommandEmpty>
             <CommandGroup>
               {facilities.map((facility) => (
-                <CommandItem key={facility.id} value={facility.id}>
+                <CommandItem
+                  key={facility.id}
+                  value={facility.id}
+                  onSelect={() => {
+                    setCheckedFacilities((prev) => {
+                      if (prev.includes(facility)) {
+                        return prev.filter((f) => f !== facility);
+                      }
+                      return [...prev, facility];
+                    });
+                  }}
+                >
                   {facility.text}
                 </CommandItem>
               ))}
