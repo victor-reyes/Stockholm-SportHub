@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 type Props = { facilities: Facility[] };
@@ -25,6 +25,12 @@ export function FacilityCombobox({ facilities }: Props) {
   const [checkedFacilities, setCheckedFacilities] = useState<Facility[]>([]);
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
+
+  const refList = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    refList.current?.scrollTo(0, 0);
+  }, [search]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -42,7 +48,7 @@ export function FacilityCombobox({ facilities }: Props) {
             value={search}
             onValueChange={setSearch}
           />
-          <CommandList>
+          <CommandList ref={refList}>
             <CommandEmpty>No facility found.</CommandEmpty>
             <CommandGroup>
               {facilities.map((facility) => (
