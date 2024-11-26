@@ -61,8 +61,26 @@ export function Combobox<T extends { id: string; text: string }>({
             value={search}
             onValueChange={setSearch}
           />
+          {checkedItems.length > 0 && (
+            <CommandGroup heading="Selected:">
+              {checkedItems.map((item) => (
+                <CommandItem
+                  key={item.id}
+                  value={item.id}
+                  onSelect={() => {
+                    setCheckedItems((prev) => prev.filter((f) => f !== item));
+                  }}
+                >
+                  <CheckItem isChecked={true} />
+                  {item.text}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          )}
+
           <CommandList ref={refList}>
             <CommandEmpty>{emptyText}</CommandEmpty>
+
             <CommandGroup>
               {items
                 .filter((item) =>
