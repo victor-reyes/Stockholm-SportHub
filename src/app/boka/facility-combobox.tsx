@@ -14,8 +14,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
-import { Check } from "lucide-react";
+import { Square, SquareCheck } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -123,9 +122,5 @@ export function Combobox<T extends { id: string; text: string }>({
 }
 
 function CheckItem({ isChecked }: { isChecked: boolean }) {
-  return (
-    <Check
-      className={cn("mr-2 h-4 w-4", isChecked ? "opacity-100" : "opacity-0")}
-    />
-  );
+  return isChecked ? <SquareCheck fill="black" color="white" /> : <Square />;
 }
