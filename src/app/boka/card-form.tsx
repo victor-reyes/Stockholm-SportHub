@@ -47,23 +47,30 @@ export function CardForm() {
             selectedItems={selectedFacilities}
             onItemsSelect={setSelectedFacilities}
           />
-          <ul className="flex flex-wrap gap-1 not-prose">
-            {selectedFacilities.map((facility) => (
-              <Button
-                key={facility.id}
-                size="xs"
-                onClick={() => {
-                  setSelectedFacilities((prev) =>
-                    prev.filter((f) => f.id !== facility.id),
-                  );
-                }}
-              >
-                <X strokeWidth={3} />
-                {facility.text}
-                <input name="facility" value={facility.text} type="hidden" />
-              </Button>
-            ))}
-          </ul>
+          {selectedFacilities.length > 0 && (
+
+              <ul className="flex flex-wrap gap-1 not-prose">
+                {selectedFacilities.map((facility) => (
+                  <Button
+                    key={facility.id}
+                    size="xs"
+                    onClick={() => {
+                      setSelectedFacilities((prev) =>
+                        prev.filter((f) => f.id !== facility.id),
+                      );
+                    }}
+                  >
+                    <X strokeWidth={3} />
+                    {facility.text}
+                    <Input
+                      name="facility"
+                      value={facility.text}
+                      type="hidden"
+                    />
+                  </Button>
+                ))}
+              </ul>
+          )}
           <Input
             type="search"
             name="sport"
