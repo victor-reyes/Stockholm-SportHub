@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -42,6 +44,7 @@ export function CardForm() {
             triggerText="Select facility"
             searchPlaceholder="Search facility..."
             emptyText="No facilities found"
+            onItemsSelect={(items) => console.log(items)}
           />
           <Input
             type="search"
