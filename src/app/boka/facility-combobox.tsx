@@ -7,6 +7,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
+  CommandSeparator,
 } from "@/components/ui/command";
 import {
   Popover,
@@ -62,23 +63,26 @@ export function Combobox<T extends { id: string; text: string }>({
             onValueChange={setSearch}
           />
           {checkedItems.length > 0 && (
-            <CommandGroup
-              heading="Selected:"
-              className="max-h-32 overflow-scroll"
-            >
-              {checkedItems.map((item) => (
-                <CommandItem
-                  key={item.id}
-                  value={item.id}
-                  onSelect={() => {
-                    setCheckedItems((prev) => prev.filter((f) => f !== item));
-                  }}
-                >
-                  <CheckItem isChecked={true} />
-                  {item.text}
-                </CommandItem>
-              ))}
-            </CommandGroup>
+            <>
+              <CommandGroup
+                heading="Selected:"
+                className="max-h-32 overflow-scroll"
+              >
+                {checkedItems.map((item) => (
+                  <CommandItem
+                    key={item.id}
+                    value={item.id}
+                    onSelect={() => {
+                      setCheckedItems((prev) => prev.filter((f) => f !== item));
+                    }}
+                  >
+                    <CheckItem isChecked={true} />
+                    {item.text}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+              <CommandSeparator />
+            </>
           )}
 
           <CommandList ref={refList}>
