@@ -13,6 +13,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { Check } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -45,6 +47,14 @@ export function FacilityCombobox({ facilities }: Props) {
                     });
                   }}
                 >
+                  <Check
+                    className={cn(
+                      "mr-2 h-4 w-4",
+                      checkedFacilities.includes(facility)
+                        ? "opacity-100"
+                        : "opacity-0",
+                    )}
+                  />
                   {facility.text}
                 </CommandItem>
               ))}
