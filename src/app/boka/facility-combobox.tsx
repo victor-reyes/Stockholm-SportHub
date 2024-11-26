@@ -18,10 +18,18 @@ import { Check } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 
-type Props<T> = { items: T[] };
+type Props<T> = {
+  items: T[];
+  triggerText: string;
+  searchPlaceholder: string;
+  emptyText: string;
+};
 
 export function Combobox<T extends { id: string; text: string }>({
   items,
+  triggerText,
+  searchPlaceholder,
+  emptyText,
 }: Props<T>) {
   const [checkedItems, setCheckedItems] = useState(Array<T>());
   const [open, setOpen] = useState(false);
@@ -39,18 +47,18 @@ export function Combobox<T extends { id: string; text: string }>({
         <Button variant="outline">
           {checkedItems.length > 0
             ? checkedItems.map((item) => item.text).join("/")
-            : "Select Facility"}
+            : triggerText}
         </Button>
       </PopoverTrigger>
       <PopoverContent>
         <Command shouldFilter={false}>
           <CommandInput
-            placeholder="Search facility..."
+            placeholder={searchPlaceholder}
             value={search}
             onValueChange={setSearch}
           />
           <CommandList ref={refList}>
-            <CommandEmpty>No facility found.</CommandEmpty>
+            <CommandEmpty>{emptyText}</CommandEmpty>
             <CommandGroup>
               {items
                 .filter((item) =>

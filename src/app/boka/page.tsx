@@ -38,7 +38,12 @@ export default function Book() {
               name="place"
               placeholder="What place do you want to book?"
             />
-            <Combobox items={[...FACILITIES]} />
+            <Combobox
+              items={[...FACILITIES]}
+              triggerText="Select facility"
+              searchPlaceholder="Search facility..."
+              emptyText="No facilities found"
+            />
             <Input
               type="search"
               name="sport"
