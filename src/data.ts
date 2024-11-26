@@ -1,5 +1,5 @@
 // prettier-ignore
-const FACILITIES =[
+export const FACILITIES =[
   {id:"drplFacility_item_1", value:"KO43", text:"Abrahamsberg BP"},
   {id:"drplFacility_item_2", value:"GO41", text:"Abrahamsbergssk. (idrott)"},
   {id:"drplFacility_item_3", value:"SO41", text:"Abrahamsbergssk. (möte)"},
