@@ -51,31 +51,35 @@ export function FacilityCombobox({ facilities }: Props) {
           <CommandList ref={refList}>
             <CommandEmpty>No facility found.</CommandEmpty>
             <CommandGroup>
-              {facilities.map((facility) => (
-                <CommandItem
-                  key={facility.id}
-                  value={facility.id}
-                  onSelect={() => {
-                    setCheckedFacilities((prev) => {
-                      if (prev.includes(facility)) {
-                        return prev.filter((f) => f !== facility);
-                      }
-                      return [...prev, facility];
-                    });
-                    setOpen(false);
-                  }}
-                >
-                  <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      checkedFacilities.includes(facility)
-                        ? "opacity-100"
-                        : "opacity-0",
-                    )}
-                  />
-                  {facility.text}
-                </CommandItem>
-              ))}
+              {facilities
+                .filter((facility) =>
+                  facility.text.toLowerCase().includes(search.toLowerCase()),
+                )
+                .map((facility) => (
+                  <CommandItem
+                    key={facility.id}
+                    value={facility.id}
+                    onSelect={() => {
+                      setCheckedFacilities((prev) => {
+                        if (prev.includes(facility)) {
+                          return prev.filter((f) => f !== facility);
+                        }
+                        return [...prev, facility];
+                      });
+                      setOpen(false);
+                    }}
+                  >
+                    <Check
+                      className={cn(
+                        "mr-2 h-4 w-4",
+                        checkedFacilities.includes(facility)
+                          ? "opacity-100"
+                          : "opacity-0",
+                      )}
+                    />
+                    {facility.text}
+                  </CommandItem>
+                ))}
             </CommandGroup>
           </CommandList>
         </Command>
