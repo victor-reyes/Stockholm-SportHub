@@ -62,7 +62,10 @@ export function Combobox<T extends { id: string; text: string }>({
             onValueChange={setSearch}
           />
           {checkedItems.length > 0 && (
-            <CommandGroup heading="Selected:">
+            <CommandGroup
+              heading="Selected:"
+              className="max-h-32 overflow-scroll"
+            >
               {checkedItems.map((item) => (
                 <CommandItem
                   key={item.id}
