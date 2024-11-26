@@ -52,7 +52,7 @@ export function CardForm() {
             selectedItems={selectedFacilities}
             onItemsSelect={setSelectedFacilities}
           />
-          <ul className="flex flex-wrap gap-1">
+          <ul className="flex flex-wrap gap-1 not-prose">
             {selectedFacilities.map((facility) => (
               <Button
                 key={facility.id}
