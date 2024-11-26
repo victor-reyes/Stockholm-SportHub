@@ -23,8 +23,10 @@ type Facility = { id: string; value: string; text: string };
 
 export function FacilityCombobox({ facilities }: Props) {
   const [checkedFacilities, setCheckedFacilities] = useState<Facility[]>([]);
+  const [open, setOpen] = useState(false);
+
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant="outline">
           {checkedFacilities.length > 0
@@ -49,6 +51,7 @@ export function FacilityCombobox({ facilities }: Props) {
                       }
                       return [...prev, facility];
                     });
+                    setOpen(false);
                   }}
                 >
                   <Check
