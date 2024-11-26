@@ -63,7 +63,7 @@ export function CardForm() {
                   );
                 }}
               >
-                <X />
+                <X strokeWidth={3} />
                 {facility.text}
                 <input name="facility" value={facility.text} type="hidden" />
               </Button>
