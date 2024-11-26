@@ -14,10 +14,14 @@ import { FACILITIES } from "@/data";
 import Form from "next/form";
 import { searchAction } from "./actions";
 import { Combobox } from "./facility-combobox";
+import { useState } from "react";
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as const;
 
+type Facility = { id: string; text: string };
 export function CardForm() {
+  const [selectedFacilities, setSelectedFacilities] = useState<Facility[]>([]);
+
   return (
     <Card className="max-w-sm m-auto">
       <CardHeader>
@@ -39,13 +43,16 @@ export function CardForm() {
             name="place"
             placeholder="What place do you want to book?"
           />
-          <Combobox
-            items={[...FACILITIES]}
-            triggerText="Select facility"
-            searchPlaceholder="Search facility..."
-            emptyText="No facilities found"
-            onItemsSelect={(items) => console.log(items)}
-          />
+          {
+            <Combobox
+              items={[...FACILITIES]}
+              triggerText="Select facility"
+              searchPlaceholder="Search facility..."
+              emptyText="No facilities found"
+              selectedItems={selectedFacilities}
+              onItemsSelect={setSelectedFacilities}
+            />
+          }
           <Input
             type="search"
             name="sport"

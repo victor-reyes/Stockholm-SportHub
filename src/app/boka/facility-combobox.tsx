@@ -24,6 +24,7 @@ type Props<T> = {
   triggerText: string;
   searchPlaceholder: string;
   emptyText: string;
+  selectedItems: T[];
   onItemsSelect?: (items: T[]) => void;
 };
 
@@ -32,9 +33,9 @@ export function Combobox<T extends { id: string; text: string }>({
   triggerText,
   searchPlaceholder,
   emptyText,
+  selectedItems,
   onItemsSelect,
 }: Props<T>) {
-  const [checkedItems, setCheckedItems] = useState(Array<T>());
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
 
@@ -49,23 +50,21 @@ export function Combobox<T extends { id: string; text: string }>({
   }, [open]);
 
   const handleSelect = (itemId: string) => {
-    setCheckedItems((prev) => {
-      let items: T[] = [];
-      const item = items.find((f) => f.id === itemId)!;
+    const item = items.find((f) => f.id === itemId)!;
 
-      if (prev.includes(item)) items = prev.filter((f) => f !== item);
-      else items = [...prev, item];
-
-      onItemsSelect?.(items);
-      return items;
-    });
+    onItemsSelect?.(
+      selectedItems.includes(item)
+        ? selectedItems.filter((f) => f !== item)
+        : [...selectedItems, item],
+    );
   };
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant="outline">
-          {checkedItems.length > 0
-            ? checkedItems.map((item) => item.text).join("/")
+          {selectedItems.length > 0
+            ? selectedItems.map((item) => item.text).join("/")
             : triggerText}
         </Button>
       </PopoverTrigger>
@@ -76,13 +75,13 @@ export function Combobox<T extends { id: string; text: string }>({
             value={search}
             onValueChange={setSearch}
           />
-          {checkedItems.length > 0 && (
+          {selectedItems.length > 0 && (
             <>
               <CommandGroup
                 heading="Selected:"
                 className="max-h-32 overflow-scroll"
               >
-                {checkedItems.map((item) => (
+                {selectedItems.map((item) => (
                   <CommandItem
                     key={item.id}
                     value={item.id}
@@ -111,7 +110,7 @@ export function Combobox<T extends { id: string; text: string }>({
                     value={item.id}
                     onSelect={handleSelect}
                   >
-                    <CheckItem isChecked={checkedItems.includes(item)} />
+                    <CheckItem isChecked={selectedItems.includes(item)} />
                     {item.text}
                   </CommandItem>
                 ))}
