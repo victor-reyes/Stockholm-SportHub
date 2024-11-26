@@ -16,6 +16,7 @@ import { searchAction } from "./actions";
 import { Combobox } from "./facility-combobox";
 import { useState } from "react";
 import { X } from "lucide-react";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as const;
 
@@ -48,8 +49,8 @@ export function CardForm() {
             onItemsSelect={setSelectedFacilities}
           />
           {selectedFacilities.length > 0 && (
-
-              <ul className="flex flex-wrap gap-1 not-prose">
+            <ScrollArea className="whitespace-nowrap">
+              <ul className="flex w-max gap-1 not-prose">
                 {selectedFacilities.map((facility) => (
                   <Button
                     key={facility.id}
@@ -70,6 +71,8 @@ export function CardForm() {
                   </Button>
                 ))}
               </ul>
+              <ScrollBar orientation="horizontal" className="hidden" />
+            </ScrollArea>
           )}
           <Input
             type="search"
