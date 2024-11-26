@@ -41,6 +41,10 @@ export function Combobox<T extends { id: string; text: string }>({
     refList.current?.scrollTo(0, 0);
   }, [search]);
 
+  useEffect(() => {
+    setSearch("");
+  }, [open]);
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
