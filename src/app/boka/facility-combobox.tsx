@@ -69,13 +69,8 @@ export function FacilityCombobox({ facilities }: Props) {
                       setOpen(false);
                     }}
                   >
-                    <Check
-                      className={cn(
-                        "mr-2 h-4 w-4",
-                        checkedFacilities.includes(facility)
-                          ? "opacity-100"
-                          : "opacity-0",
-                      )}
+                    <CheckItem
+                      isChecked={checkedFacilities.includes(facility)}
                     />
                     {facility.text}
                   </CommandItem>
@@ -85,5 +80,13 @@ export function FacilityCombobox({ facilities }: Props) {
         </Command>
       </PopoverContent>
     </Popover>
+  );
+}
+
+function CheckItem({ isChecked }: { isChecked: boolean }) {
+  return (
+    <Check
+      className={cn("mr-2 h-4 w-4", isChecked ? "opacity-100" : "opacity-0")}
+    />
   );
 }
