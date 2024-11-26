@@ -24,6 +24,7 @@ type Facility = { id: string; value: string; text: string };
 export function FacilityCombobox({ facilities }: Props) {
   const [checkedFacilities, setCheckedFacilities] = useState<Facility[]>([]);
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -36,7 +37,11 @@ export function FacilityCombobox({ facilities }: Props) {
       </PopoverTrigger>
       <PopoverContent>
         <Command shouldFilter={false}>
-          <CommandInput placeholder="Search facility..." />
+          <CommandInput
+            placeholder="Search facility..."
+            value={search}
+            onValueChange={setSearch}
+          />
           <CommandList>
             <CommandEmpty>No facility found.</CommandEmpty>
             <CommandGroup>
