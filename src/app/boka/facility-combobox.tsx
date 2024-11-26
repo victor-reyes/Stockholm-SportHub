@@ -24,6 +24,7 @@ type Props<T> = {
   triggerText: string;
   searchPlaceholder: string;
   emptyText: string;
+  onItemsSelect?: (items: T[]) => void;
 };
 
 export function Combobox<T extends { id: string; text: string }>({
@@ -31,6 +32,7 @@ export function Combobox<T extends { id: string; text: string }>({
   triggerText,
   searchPlaceholder,
   emptyText,
+  onItemsSelect,
 }: Props<T>) {
   const [checkedItems, setCheckedItems] = useState(Array<T>());
   const [open, setOpen] = useState(false);
@@ -46,6 +48,18 @@ export function Combobox<T extends { id: string; text: string }>({
     setSearch("");
   }, [open]);
 
+  const handleSelect = (itemId: string) => {
+    setCheckedItems((prev) => {
+      let items: T[] = [];
+      const item = items.find((f) => f.id === itemId)!;
+
+      if (prev.includes(item)) items = prev.filter((f) => f !== item);
+      else items = [...prev, item];
+
+      onItemsSelect?.(items);
+      return items;
+    });
+  };
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -72,9 +86,7 @@ export function Combobox<T extends { id: string; text: string }>({
                   <CommandItem
                     key={item.id}
                     value={item.id}
-                    onSelect={() => {
-                      setCheckedItems((prev) => prev.filter((f) => f !== item));
-                    }}
+                    onSelect={handleSelect}
                   >
                     <CheckItem isChecked={true} />
                     {item.text}
@@ -97,14 +109,7 @@ export function Combobox<T extends { id: string; text: string }>({
                   <CommandItem
                     key={item.id}
                     value={item.id}
-                    onSelect={() => {
-                      setCheckedItems((prev) => {
-                        if (prev.includes(item)) {
-                          return prev.filter((f) => f !== item);
-                        }
-                        return [...prev, item];
-                      });
-                    }}
+                    onSelect={handleSelect}
                   >
                     <CheckItem isChecked={checkedItems.includes(item)} />
                     {item.text}
