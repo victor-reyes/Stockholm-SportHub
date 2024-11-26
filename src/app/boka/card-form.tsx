@@ -56,9 +56,7 @@ export function CardForm() {
             {selectedFacilities.map((facility) => (
               <Button
                 key={facility.id}
-                size="sm"
-                tw="h-1"
-                className="text-[10px] h-5 px-1"
+                size="xs"
                 onClick={() => {
                   setSelectedFacilities((prev) =>
                     prev.filter((f) => f.id !== facility.id),
