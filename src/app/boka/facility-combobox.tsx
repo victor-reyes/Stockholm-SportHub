@@ -26,7 +26,11 @@ export function FacilityCombobox({ facilities }: Props) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline">Select Facility</Button>
+        <Button variant="outline">
+          {checkedFacilities.length > 0
+            ? checkedFacilities.map((facility) => facility.text).join("/")
+            : "Select Facility"}
+        </Button>
       </PopoverTrigger>
       <PopoverContent>
         <Command shouldFilter={false}>
