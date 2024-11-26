@@ -43,16 +43,14 @@ export function CardForm() {
             name="place"
             placeholder="What place do you want to book?"
           />
-          {
-            <Combobox
-              items={[...FACILITIES]}
-              triggerText="Select facility"
-              searchPlaceholder="Search facility..."
-              emptyText="No facilities found"
-              selectedItems={selectedFacilities}
-              onItemsSelect={setSelectedFacilities}
-            />
-          }
+          <Combobox
+            items={[...FACILITIES]}
+            triggerText="Select facility"
+            searchPlaceholder="Search facility..."
+            emptyText="No facilities found"
+            selectedItems={selectedFacilities}
+            onItemsSelect={setSelectedFacilities}
+          />
           <Input
             type="search"
             name="sport"
