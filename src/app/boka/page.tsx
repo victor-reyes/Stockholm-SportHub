@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import Form from "next/form";
 import { Button } from "@/components/ui/button";
 import { searchAction } from "./actions";
-import { FacilityCombobox } from "./facility-combobox";
+import { Combobox } from "./facility-combobox";
 import { FACILITIES } from "@/data";
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -38,7 +38,7 @@ export default function Book() {
               name="place"
               placeholder="What place do you want to book?"
             />
-            <FacilityCombobox facilities={[...FACILITIES]} />
+            <Combobox items={[...FACILITIES]} />
             <Input
               type="search"
               name="sport"

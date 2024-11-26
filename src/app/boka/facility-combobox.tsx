@@ -18,12 +18,12 @@ import { Check } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 
-type Props<T> = { facilities: T[] };
+type Props<T> = { items: T[] };
 
-export function FacilityCombobox<T extends { id: string; text: string }>({
-  facilities,
+export function Combobox<T extends { id: string; text: string }>({
+  items,
 }: Props<T>) {
-  const [checkedFacilities, setCheckedFacilities] = useState(Array<T>());
+  const [checkedItems, setCheckedItems] = useState(Array<T>());
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
 
@@ -37,8 +37,8 @@ export function FacilityCombobox<T extends { id: string; text: string }>({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant="outline">
-          {checkedFacilities.length > 0
-            ? checkedFacilities.map((facility) => facility.text).join("/")
+          {checkedItems.length > 0
+            ? checkedItems.map((item) => item.text).join("/")
             : "Select Facility"}
         </Button>
       </PopoverTrigger>
@@ -52,28 +52,26 @@ export function FacilityCombobox<T extends { id: string; text: string }>({
           <CommandList ref={refList}>
             <CommandEmpty>No facility found.</CommandEmpty>
             <CommandGroup>
-              {facilities
-                .filter((facility) =>
-                  facility.text.toLowerCase().includes(search.toLowerCase()),
+              {items
+                .filter((item) =>
+                  item.text.toLowerCase().includes(search.toLowerCase()),
                 )
-                .map((facility) => (
+                .map((item) => (
                   <CommandItem
-                    key={facility.id}
-                    value={facility.id}
+                    key={item.id}
+                    value={item.id}
                     onSelect={() => {
-                      setCheckedFacilities((prev) => {
-                        if (prev.includes(facility)) {
-                          return prev.filter((f) => f !== facility);
+                      setCheckedItems((prev) => {
+                        if (prev.includes(item)) {
+                          return prev.filter((f) => f !== item);
                         }
-                        return [...prev, facility];
+                        return [...prev, item];
                       });
                       setOpen(false);
                     }}
                   >
-                    <CheckItem
-                      isChecked={checkedFacilities.includes(facility)}
-                    />
-                    {facility.text}
+                    <CheckItem isChecked={checkedItems.includes(item)} />
+                    {item.text}
                   </CommandItem>
                 ))}
             </CommandGroup>
