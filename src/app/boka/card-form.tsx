@@ -15,6 +15,7 @@ import Form from "next/form";
 import { searchAction } from "./actions";
 import { Combobox } from "./facility-combobox";
 import { useState } from "react";
+import { X } from "lucide-react";
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as const;
 
@@ -51,6 +52,25 @@ export function CardForm() {
             selectedItems={selectedFacilities}
             onItemsSelect={setSelectedFacilities}
           />
+          <ul className="flex flex-wrap gap-1">
+            {selectedFacilities.map((facility) => (
+              <Button
+                key={facility.id}
+                size="sm"
+                tw="h-1"
+                className="text-[10px] h-5 px-1"
+                onClick={() => {
+                  setSelectedFacilities((prev) =>
+                    prev.filter((f) => f.id !== facility.id),
+                  );
+                }}
+              >
+                <X />
+                {facility.text}
+                <input name="facility" value={facility.text} type="hidden" />
+              </Button>
+            ))}
+          </ul>
           <Input
             type="search"
             name="sport"
