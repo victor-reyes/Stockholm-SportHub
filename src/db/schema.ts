@@ -4,6 +4,7 @@ import {
   varchar,
   timestamp,
   integer,
+  text,
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
@@ -19,8 +20,12 @@ export const usersRelations = relations(users, ({ many }) => ({
 
 export const bookings = pgTable("bookings", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").references(() => users.id),
-  facilityId: integer("facility_id").references(() => facilities.id),
+  userId: integer("user_id")
+    .notNull()
+    .references(() => users.id),
+  facilityId: integer("facility_id")
+    .notNull()
+    .references(() => facilities.id),
   startTimestamp: timestamp("start_timestamp", { mode: "date" }).notNull(),
   endTimestamp: timestamp("end_timestamp", { mode: "date" }).notNull(),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
@@ -40,7 +45,7 @@ export const bookingsRelations = relations(bookings, ({ one }) => ({
 export const facilities = pgTable("facilities", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 50 }).notNull(),
-  description: varchar("description", { length: 255 }),
+  description: text("description").notNull(),
 });
 
 export const facilitiesRelations = relations(facilities, ({ many }) => ({
@@ -50,7 +55,7 @@ export const facilitiesRelations = relations(facilities, ({ many }) => ({
 
 export const sports = pgTable("sports", {
   id: serial("id").primaryKey(),
-  sport: varchar("sport", { length: 10 }).$type<Sport>().notNull(),
+  sport: varchar("sport", { length: 20 }).$type<Sport>().notNull(),
 });
 
 export const sportsRelations = relations(sports, ({ many }) => ({
@@ -59,8 +64,12 @@ export const sportsRelations = relations(sports, ({ many }) => ({
 
 export const facilitiesToSports = pgTable("facilities_to_sports", {
   id: serial("id").primaryKey(),
-  facilityId: integer("facility_id").references(() => facilities.id),
-  sportId: integer("sport_id").references(() => sports.id),
+  facilityId: integer("facility_id")
+    .references(() => facilities.id)
+    .notNull(),
+  sportId: integer("sport_id")
+    .references(() => sports.id)
+    .notNull(),
 });
 
 export const facilitiesToSportsRelations = relations(
