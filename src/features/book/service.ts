@@ -14,16 +14,16 @@ function createService(repository: Repository) {
       return await repository.getAllBookings();
     },
     async getFalicityBookings(
+      fromTimestamp: Date,
+      toTimeStamp: Date,
       facilityIds?: number[],
       sportIds?: number[],
-      fromTimestamp?: Date,
-      toTimeStamp?: Date,
     ) {
       return await repository.getFalicityBookings(
-        facilityIds,
-        sportIds,
         fromTimestamp,
         toTimeStamp,
+        facilityIds,
+        sportIds,
       );
     },
 
