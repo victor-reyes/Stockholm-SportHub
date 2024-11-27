@@ -44,10 +44,17 @@ export function createRepository(db: DB) {
     },
 
     async insertUser(user: UserInsert) {
-      return (
-        await db.insert(users).values(user).returning({ id: users.id })
-      )[0].id;
+      return await db.transaction(async (tx) => {
+        const existingUser = await tx.query.users.findFirst({
+          where: eq(users.email, user.email),
+        });
+        return existingUser
+          ? undefined
+          : (await tx.insert(users).values(user).returning({ id: users.id }))[0]
+              .id;
+      });
     },
+
     async insertFacility(facility: FacilityInsert) {
       return (
         await db
