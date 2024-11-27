@@ -22,12 +22,17 @@ export function createRepository(db: DB) {
     },
 
     async getFalicityBookings(
-      fromDate: Date,
-      toDate: Date,
+      fromTimestamp: Date,
+      toTimestamp: Date,
       facilityIds?: number[],
-      sportsIds?: number[],
+      sportIds?: number[],
     ) {
-      const where = buildWhereSQL(fromDate, toDate, facilityIds, sportsIds);
+      const where = buildWhereSQL(
+        fromTimestamp,
+        toTimestamp,
+        facilityIds,
+        sportIds,
+      );
 
       return await db.query.facilities.findMany({
         with: {
@@ -73,21 +78,21 @@ export function createRepository(db: DB) {
 }
 
 function buildWhereSQL(
-  fromDate: Date,
-  toDate: Date,
+  fromTimestamp: Date,
+  toTimestamp: Date,
   facilityIds?: number[],
-  sportsIds?: number[],
+  sportIds?: number[],
 ) {
-  const facilityIn = facilityIds
+  const facilityIdsInArray = facilityIds
     ? inArray(bookings.facilityId, facilityIds)
     : undefined;
-  const sportIn = sportsIds ? inArray(sports.id, sports) : undefined;
+  const sportIdsInArray = sportIds ? inArray(sports.id, sports) : undefined;
   const overlappingDates = and(
-    lt(bookings.startTimestamp, toDate),
-    gt(bookings.endTimestamp, fromDate),
+    lt(bookings.startTimestamp, toTimestamp),
+    gt(bookings.endTimestamp, fromTimestamp),
   );
 
-  return and(facilityIn, sportIn, overlappingDates);
+  return and(facilityIdsInArray, sportIdsInArray, overlappingDates);
 }
 
 export type Repository = ReturnType<typeof createRepository>;

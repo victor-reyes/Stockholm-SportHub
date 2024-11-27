@@ -15,15 +15,15 @@ function createService(repository: Repository) {
     },
     async getFalicityBookings(
       facilityIds?: number[],
-      sportsIds?: number[],
-      fromDate?: Date,
-      toDate?: Date,
+      sportIds?: number[],
+      fromTimestamp?: Date,
+      toTimeStamp?: Date,
     ) {
       return await repository.getFalicityBookings(
         facilityIds,
-        sportsIds,
-        fromDate,
-        toDate,
+        sportIds,
+        fromTimestamp,
+        toTimeStamp,
       );
     },
 
