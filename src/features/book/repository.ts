@@ -39,19 +39,35 @@ export function createRepository(db: DB) {
     },
 
     async insertUser(user: UserInsert) {
-      return (await db.insert(users).values(user)).oid;
+      return (
+        await db.insert(users).values(user).returning({ id: users.id })
+      )[0].id;
     },
     async insertFacility(facility: FacilityInsert) {
-      return (await db.insert(facilities).values(facility)).oid;
+      return (
+        await db
+          .insert(facilities)
+          .values(facility)
+          .returning({ id: facilities.id })
+      )[0].id;
     },
     async insertSport(sport: SportInsert) {
-      return (await db.insert(sports).values(sport)).oid;
+      return (
+        await db.insert(sports).values(sport).returning({ id: sports.id })
+      )[0].id;
     },
     async insertFacilitySport(facilitySport: FacilitiesToSportsInsert) {
-      return (await db.insert(facilitiesToSports).values(facilitySport)).oid;
+      return (
+        await db
+          .insert(facilitiesToSports)
+          .values(facilitySport)
+          .returning({ id: facilitiesToSports.id })
+      )[0].id;
     },
     async insertBooking(booking: BookingInsert) {
-      return (await db.insert(bookings).values(booking)).oid;
+      return (
+        await db.insert(bookings).values(booking).returning({ id: bookings.id })
+      )[0].id;
     },
   };
 }
