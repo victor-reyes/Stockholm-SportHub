@@ -31,11 +31,10 @@ async function seed() {
   await service.insertBookings(mockBookings(usersIds, facilitiesIds));
 }
 
-function mockUsers(numberOfUsers: number = 100) {
-  return Array.from({ length: numberOfUsers }).map(() => ({
-    name: faker.person.fullName(),
-    email: faker.internet.email(),
-  }));
+function mockUsers(numberOfUsers: number = 1000) {
+  return faker.helpers
+    .uniqueArray(faker.internet.email, numberOfUsers)
+    .map((email) => ({ name: faker.person.fullName(), email }));
 }
 
 function mockFacilities() {
