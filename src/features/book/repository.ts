@@ -21,6 +21,10 @@ export function createRepository(db: DB) {
       return await db.query.bookings.findMany();
     },
 
+    async getAllFacilities() {
+      return await db.query.facilities.findMany();
+    },
+
     async getFalicityBookings(
       fromTimestamp: Date,
       toTimestamp: Date,

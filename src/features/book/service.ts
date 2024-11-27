@@ -7,12 +7,17 @@ import {
   SportInsert,
   UserInsert,
 } from "./types";
+import { getDefaultAutoSelectFamily } from "net";
 
 function createService(repository: Repository) {
   return {
     async getAllBookings() {
       return await repository.getAllBookings();
     },
+    async getAllFacilities() {
+      return await repository.getAllFacilities();
+    },
+
     async getFalicityBookings(
       fromTimestamp: Date,
       toTimeStamp: Date,
