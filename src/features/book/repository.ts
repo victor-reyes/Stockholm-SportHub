@@ -54,7 +54,9 @@ export function createRepository(db: DB) {
               .id;
       });
     },
-
+    async getUserByEmail(email: string) {
+      return await db.query.users.findFirst({ where: eq(users.email, email) });
+    },
     async insertFacility(facility: FacilityInsert) {
       return (
         await db
