@@ -22,12 +22,12 @@ export function createRepository(db: DB) {
     },
 
     async getFalicityBookings(
+      fromDate: Date,
+      toDate: Date,
       facilityIds?: number[],
       sportsIds?: number[],
-      fromDate?: Date,
-      toDate?: Date,
     ) {
-      const where = buildWhereSQL(facilityIds, sportsIds, fromDate, toDate);
+      const where = buildWhereSQL(fromDate, toDate, facilityIds, sportsIds);
 
       return await db.query.facilities.findMany({
         with: {
@@ -57,10 +57,10 @@ export function createRepository(db: DB) {
 }
 
 function buildWhereSQL(
+  fromDate: Date,
+  toDate: Date,
   facilityIds?: number[],
   sportsIds?: number[],
-  fromDate?: Date,
-  toDate?: Date,
 ) {
   const facilityIn = facilityIds
     ? inArray(bookings.facilityId, facilityIds)
