@@ -28,11 +28,7 @@ async function seed() {
     }),
   );
 
-  await Promise.all(
-    mockBookings(usersIds, facilitiesIds).map(async (booking) => {
-      return await service.insertBooking(booking);
-    }),
-  );
+  await service.insertBookings(mockBookings(usersIds, facilitiesIds));
 }
 
 function mockUsers(numberOfUsers: number = 100) {
