@@ -23,6 +23,8 @@ const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as const;
 type Facility = { id: string; text: string };
 export function CardForm() {
   const [selectedFacilities, setSelectedFacilities] = useState<Facility[]>([]);
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
 
   return (
     <Card className="max-w-sm m-auto">
@@ -79,8 +81,18 @@ export function CardForm() {
             name="sport"
             placeholder="What activity do you want to book?"
           />
-          <Input type="date" name="date" />
-          <Input type="time" name="time" />
+          <Input
+            type="date"
+            name="date"
+            value={date}
+            onChange={(event) => setDate(event.target.value)}
+          />
+          <Input
+            type="time"
+            name="time"
+            value={time}
+            onChange={(event) => setTime(event.target.value)}
+          />
           <div className="flex gap-1 text-sm">
             {DAYS.map((day) => (
               <label key={day} className="flex items-center gap-1">
