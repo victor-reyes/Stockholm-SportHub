@@ -36,8 +36,8 @@ function createService(repository: Repository) {
     async insertSport(sport: SportInsert) {
       return await repository.insertSport(sport);
     },
-    async insertFacilitySport(facilitySport: FacilitiesToSportsInsert) {
-      return await repository.insertFacilitySport(facilitySport);
+    async insertFacilityToSport(facilityToSport: FacilitiesToSportsInsert) {
+      return await repository.insertFacilitySport(facilityToSport);
     },
     async insertBooking(booking: BookingInsert) {
       return await repository.insertBooking(booking);
