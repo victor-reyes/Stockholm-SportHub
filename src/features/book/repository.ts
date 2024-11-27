@@ -6,7 +6,7 @@ import {
   sports,
   users,
 } from "@/db/schema";
-import { and, gt, inArray, lt } from "drizzle-orm";
+import { and, eq, gt, inArray, lt } from "drizzle-orm";
 import {
   BookingInsert,
   FacilitiesToSportsInsert,
@@ -73,6 +73,20 @@ export function createRepository(db: DB) {
       return (
         await db.insert(bookings).values(booking).returning({ id: bookings.id })
       )[0].id;
+    },
+
+    async findOverlapping(
+      facilityId: number,
+      fromTimestmp: Date,
+      toTimestamp: Date,
+    ) {
+      return await db.query.bookings.findFirst({
+        where: and(
+          eq(bookings.facilityId, facilityId),
+          lt(bookings.startTimestamp, toTimestamp),
+          gt(bookings.endTimestamp, fromTimestmp),
+        ),
+      });
     },
   };
 }
