@@ -6,6 +6,19 @@ function createService(repository: Repository) {
     async getAllBookings() {
       return await repository.getAllBookings();
     },
+    async getFalicityBookings(
+      facilityIds?: number[],
+      sportsIds?: number[],
+      fromDate?: Date,
+      toDate?: Date,
+    ) {
+      return await repository.getFalicityBookings(
+        facilityIds,
+        sportsIds,
+        fromDate,
+        toDate,
+      );
+    },
   };
 }
 
