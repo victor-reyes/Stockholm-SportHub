@@ -23,9 +23,8 @@ export const bookings = pgTable("bookings", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").references(() => users.id),
   facilityId: integer("facility_id").references(() => facilities.id),
-  bookingDate: date("booking_date", { mode: "date" }).notNull(),
-  startTime: time("start_time").notNull(),
-  endTime: time("end_time").notNull(),
+  startTimestamp: timestamp("start_timestamp", { mode: "date" }).notNull(),
+  endTimestamp: timestamp("end_timestamp", { mode: "date" }).notNull(),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
 });
 
