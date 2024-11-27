@@ -79,25 +79,45 @@ export function createRepository(db: DB) {
       )[0].id;
     },
     async insertBooking(booking: BookingInsert) {
-      return (
-        await db.insert(bookings).values(booking).returning({ id: bookings.id })
-      )[0].id;
+      await db.transaction(async (tx) => {
+        const overlapping = await tx.query.bookings.findFirst({
+          where: buildOverlappingSQL(
+            booking.facilityId,
+            booking.startTimestamp,
+            booking.endTimestamp,
+          ),
+        });
+        overlapping ? overlapping : await tx.insert(bookings).values(booking);
+      });
     },
 
-    async findOverlapping(
-      facilityId: number,
-      fromTimestmp: Date,
-      toTimestamp: Date,
-    ) {
-      return await db.query.bookings.findFirst({
-        where: and(
-          eq(bookings.facilityId, facilityId),
-          lt(bookings.startTimestamp, toTimestamp),
-          gt(bookings.endTimestamp, fromTimestmp),
-        ),
+    async insertBookings(bookingsInserts: BookingInsert[]) {
+      return await db.transaction(async (tx) => {
+        for (const booking of bookingsInserts) {
+          const overlapping = await tx.query.bookings.findFirst({
+            where: buildOverlappingSQL(
+              booking.facilityId,
+              booking.startTimestamp,
+              booking.endTimestamp,
+            ),
+          });
+          overlapping ?? (await tx.insert(bookings).values(booking));
+        }
       });
     },
   };
+}
+
+function buildOverlappingSQL(
+  facilityId: number,
+  fromTimestmp: Date,
+  toTimestamp: Date,
+) {
+  return and(
+    eq(bookings.facilityId, facilityId),
+    lt(bookings.startTimestamp, toTimestamp),
+    gt(bookings.endTimestamp, fromTimestmp),
+  );
 }
 
 function buildWhereSQL(
