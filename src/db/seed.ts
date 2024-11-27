@@ -72,7 +72,7 @@ function mockBookings(userIds: number[], facilityIds: number[]) {
     return dates.map((fromDate) => {
       const facilityId = faker.helpers.arrayElement(facilityIds);
       fromDate.setHours(Math.max(8, Math.min(21, fromDate.getHours())));
-      fromDate.setMinutes(faker.helpers.arrayElement([0, 15, 30, 45]));
+      fromDate.setMinutes(faker.helpers.arrayElement([0, 15, 30, 45]), 0, 0);
 
       const toDate = new Date(fromDate);
       const minuteInMs = 60 * 1000;
@@ -81,7 +81,7 @@ function mockBookings(userIds: number[], facilityIds: number[]) {
           minuteInMs * faker.helpers.arrayElement([60, 75, 90, 105, 120]),
       );
 
-      toDate.setTime(Math.min(toDate.getTime(), toDate.setHours(23, 0)));
+      toDate.setTime(Math.min(toDate.getTime(), toDate.setHours(23, 0, 0, 0)));
 
       return {
         userId,
