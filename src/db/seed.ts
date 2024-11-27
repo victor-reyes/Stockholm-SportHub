@@ -4,15 +4,11 @@ import { faker } from "@faker-js/faker";
 import { SPORTS } from "./schema";
 
 async function seed() {
-  const usersIds = await Promise.all(
-    mockUsers().map(async () => {
-      const user = {
-        name: faker.person.fullName(),
-        email: faker.internet.email(),
-      };
-      return await service.insertUser(user);
-    }),
-  );
+  const usersIds = (
+    await Promise.all(
+      mockUsers().map(async (user) => await service.insertUser(user)),
+    )
+  ).filter((id) => id !== undefined);
 
   const facilitiesIds = await Promise.all(
     mockFacilities().map(async (facility) => {
