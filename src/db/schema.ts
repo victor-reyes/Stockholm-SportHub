@@ -79,11 +79,24 @@ export const facilitiesToSportsRelations = relations(
   }),
 );
 
-export type Sport =
-  | "football"
-  | "basketball"
-  | "volleyball"
-  | "tennis"
-  | "badminton"
-  | "ice hockey"
-  | "floorball";
+export type Sport = (typeof SPORTS)[number];
+
+export const SPORTS = [
+  "football",
+  "basketball",
+  "volleyball",
+  "tennis",
+  "badminton",
+  "ice hockey",
+  "floorball",
+  "futsal",
+  "handball",
+  "table tennis",
+  "squash",
+  "gym",
+  "swimming",
+  "yoga",
+  "dance",
+  "martial arts",
+  "golf",
+] as const;
