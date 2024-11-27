@@ -6,7 +6,7 @@ import {
   sports,
   users,
 } from "@/db/schema";
-import { and, gte, inArray } from "drizzle-orm";
+import { and, gt, inArray, lt } from "drizzle-orm";
 import {
   BookingInsert,
   FacilitiesToSportsInsert,
@@ -66,12 +66,12 @@ function buildWhereSQL(
     ? inArray(bookings.facilityId, facilityIds)
     : undefined;
   const sportIn = sportsIds ? inArray(sports.id, sports) : undefined;
-  const fromDateGte = fromDate
-    ? gte(bookings.bookingDate, fromDate)
-    : undefined;
-  const toDateLte = toDate ? gte(bookings.bookingDate, toDate) : undefined;
+  const overlappingDates = and(
+    lt(bookings.startTimestamp, toDate),
+    gt(bookings.endTimestamp, fromDate),
+  );
 
-  return and(facilityIn, sportIn, fromDateGte, toDateLte);
+  return and(facilityIn, sportIn, overlappingDates);
 }
 
 export type Repository = ReturnType<typeof createRepository>;
