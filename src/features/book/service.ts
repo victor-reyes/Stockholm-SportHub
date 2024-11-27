@@ -42,6 +42,9 @@ function createService(repository: Repository) {
     async insertBooking(booking: BookingInsert) {
       return await repository.insertBooking(booking);
     },
+    async insertBookings(bookings: BookingInsert[]) {
+      return await repository.insertBookings(bookings);
+    },
   };
 }
 
