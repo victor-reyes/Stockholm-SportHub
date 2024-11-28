@@ -1,4 +1,4 @@
-import { FACILITIES } from "@/data";
+import { FACILITIES, FACILITIES_WITH_COORDINATES } from "@/data";
 import { service } from "@/features";
 import { faker } from "@faker-js/faker";
 import { SPORTS } from "./schema";
@@ -31,16 +31,18 @@ async function seed() {
   await service.insertBookings(mockBookings(usersIds, facilitiesIds));
 }
 
-function mockUsers(numberOfUsers: number = 1000) {
+function mockUsers(numberOfUsers: number = 2000) {
   return faker.helpers
     .uniqueArray(faker.internet.email, numberOfUsers)
     .map((email) => ({ name: faker.person.fullName(), email }));
 }
 
 function mockFacilities() {
-  return FACILITIES.map((facility) => ({
+  return FACILITIES_WITH_COORDINATES.map((facility) => ({
     name: facility.text,
     description: faker.commerce.productDescription(),
+    lat: facility.latitude,
+    lng: facility.longitude,
   }));
 }
 
@@ -63,11 +65,12 @@ function mockFacilitiesToSports(facilityIds: number[], sportIds: number[]) {
 function mockBookings(userIds: number[], facilityIds: number[]) {
   return userIds.flatMap((userId) => {
     const from = new Date();
+    from.setDate(from.getDate() - 2);
 
     const to = new Date(from);
-    to.setMonth(to.getMonth() + 6);
+    to.setDate(to.getDate() + 10);
 
-    const dates = faker.date.betweens({ from: from, to: to, count: 10 });
+    const dates = faker.date.betweens({ from: from, to: to, count: 15 });
 
     return dates.map((fromDate) => {
       const facilityId = faker.helpers.arrayElement(facilityIds);
@@ -78,7 +81,8 @@ function mockBookings(userIds: number[], facilityIds: number[]) {
       const minuteInMs = 60 * 1000;
       toDate.setTime(
         toDate.getTime() +
-          minuteInMs * faker.helpers.arrayElement([60, 75, 90, 105, 120]),
+          minuteInMs *
+            faker.helpers.arrayElement([60, 75, 90, 105, 120, 150, 180, 240]),
       );
 
       toDate.setTime(Math.min(toDate.getTime(), toDate.setHours(23, 0, 0, 0)));

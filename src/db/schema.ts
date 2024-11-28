@@ -5,6 +5,7 @@ import {
   timestamp,
   integer,
   text,
+  real,
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
@@ -46,6 +47,8 @@ export const facilities = pgTable("facilities", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 50 }).notNull(),
   description: text("description").notNull(),
+  lat: real("lat").notNull(),
+  lng: real("lng").notNull(),
 });
 
 export const facilitiesRelations = relations(facilities, ({ many }) => ({
