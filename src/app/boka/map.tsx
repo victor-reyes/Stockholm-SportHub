@@ -1,4 +1,5 @@
 "use client";
+import { FacilitySelect } from "@/features/book/types";
 import {
   APIProvider,
   Map as GoogleMap,
@@ -7,8 +8,9 @@ import {
 
 type Props = {
   apiKey: string;
+  facilities: FacilitySelect[];
 };
-export function Map({ apiKey }: Props) {
+export function Map({ apiKey, facilities }: Props) {
   return (
     <APIProvider apiKey={apiKey}>
       <div className="min-w-80 not-prose">
@@ -21,7 +23,12 @@ export function Map({ apiKey }: Props) {
           disableDefaultUI={false}
           reuseMaps={true}
         >
-          <Marker position={{ lat: 59.33258, lng: 18.0649 }} />
+          {facilities.map((facility) => (
+            <Marker
+              key={facility.id}
+              position={{ lat: facility.lat, lng: facility.lng }}
+            ></Marker>
+          ))}
         </GoogleMap>
       </div>
     </APIProvider>

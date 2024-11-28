@@ -19,12 +19,15 @@ export default async function Book(props: Props) {
     facilities.map((f) => f.id),
     undefined,
   );
-  
+
   return (
     <main className="p-4">
       <h1>Booking</h1>
       <div className="flex flex-1 flex-wrap gap-4 items-center">
-        <Map apiKey={process.env.GOOGLE_MAPS_API_KEY!} />
+        <Map
+          apiKey={process.env.GOOGLE_MAPS_API_KEY!}
+          facilities={facilitiesBookings}
+        />
         <CardForm
           allFacilities={allFacilities}
           facilities={facilities}
