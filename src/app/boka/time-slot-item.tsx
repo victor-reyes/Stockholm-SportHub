@@ -52,8 +52,6 @@ import { useState, useEffect } from "react";
 const useFormattedDateTime = (date: Date) => {
   const [formattedDate, setFormattedDate] = useState("");
 
-  console.log("formatted", formattedDate);
-
   const options: Intl.DateTimeFormatOptions = {
     hour: "2-digit",
     minute: "2-digit",
