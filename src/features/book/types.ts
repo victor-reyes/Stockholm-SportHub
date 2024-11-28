@@ -20,3 +20,10 @@ export type FacilitiesToSportsSelect = typeof facilitiesToSports.$inferSelect;
 
 export type BookingInsert = typeof bookings.$inferInsert;
 export type BookingSelect = typeof bookings.$inferSelect;
+
+export type TimeSlot = {
+  start: Date;
+  end: Date;
+  durationInMin: number;
+  state: "free" | "booked" | "unavailable";
+};
