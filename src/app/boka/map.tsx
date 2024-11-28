@@ -1,6 +1,7 @@
 "use client";
 import { FacilitySelect } from "@/features/book/types";
 import {
+  AdvancedMarker,
   APIProvider,
   Map as GoogleMap,
   Marker,
@@ -24,10 +25,10 @@ export function Map({ apiKey, facilities }: Props) {
           reuseMaps={true}
         >
           {facilities.map((facility) => (
-            <Marker
+            <AdvancedMarker
               key={facility.id}
               position={{ lat: facility.lat, lng: facility.lng }}
-            ></Marker>
+            ></AdvancedMarker>
           ))}
         </GoogleMap>
       </div>
