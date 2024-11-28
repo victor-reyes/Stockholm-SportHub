@@ -70,7 +70,9 @@ function Marker({ id, name, description, lat, lng }: FacilitySelect) {
         />
       </AdvancedMarker>
       {infoWindowShown && (
-        <InfoWindow anchor={marker} onClose={handleClose} className="prose">
+        <InfoWindow anchor={marker}
+        shouldFocus={false}
+        onClose={handleClose} className="prose">
           <h1 className="font-bold">{name}</h1>
           <div className="flex justify-between items-center">
             <Image
@@ -79,7 +81,7 @@ function Marker({ id, name, description, lat, lng }: FacilitySelect) {
               height={150}
               alt={"Més que un club"}
             />
-            <Button onClick={handleClose}>Book</Button>
+            <Button>Book</Button>
           </div>
           <p>{description}</p>
         </InfoWindow>

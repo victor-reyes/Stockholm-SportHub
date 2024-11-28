@@ -13,7 +13,7 @@ type Props = {
 
 export function FacilitiesBooking({ facilities, bounds }: Props) {
   const [showOccupied, setShowOccupied] = useState(false);
-  const [updateOnMapMove, setUpdateOnMapMove] = useState(false);
+  const [updateOnMapMove, setUpdateOnMapMove] = useState(true);
 
   return (
     <div>
@@ -57,7 +57,11 @@ export function FacilitiesBooking({ facilities, bounds }: Props) {
                     (timeSlot) => showOccupied || timeSlot.state === "free",
                   )
                   .map((timeSlot, index) => (
-                    <TimeSlotItem key={index} timeSlot={timeSlot} />
+                    <TimeSlotItem
+                      key={index}
+                      facility={facility}
+                      timeSlot={timeSlot}
+                    />
                   ))}
               </ul>
             </li>
