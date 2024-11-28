@@ -1,7 +1,8 @@
-import { FACILITIES, FACILITIES_WITH_COORDINATES } from "@/data";
+import { FACILITIES } from "@/data";
 import { service } from "@/features";
 import { faker } from "@faker-js/faker";
 import { SPORTS } from "./schema";
+import { generateRandomPoint } from "./geo";
 
 async function seed() {
   const usersIds = (
@@ -31,19 +32,22 @@ async function seed() {
   await service.insertBookings(mockBookings(usersIds, facilitiesIds));
 }
 
-function mockUsers(numberOfUsers: number = 2000) {
+function mockUsers(numberOfUsers: number = 200) {
   return faker.helpers
     .uniqueArray(faker.internet.email, numberOfUsers)
     .map((email) => ({ name: faker.person.fullName(), email }));
 }
 
 function mockFacilities() {
-  return FACILITIES_WITH_COORDINATES.map((facility) => ({
-    name: facility.text,
-    description: faker.commerce.productDescription(),
-    lat: facility.latitude,
-    lng: facility.longitude,
-  }));
+  return FACILITIES.map((facility) => {
+    const { lat, lng } = generateRandomPoint();
+    return {
+      name: facility.text,
+      description: faker.commerce.productDescription(),
+      lat: lat,
+      lng: lng,
+    };
+  });
 }
 
 function mockSports() {
