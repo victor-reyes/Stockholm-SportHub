@@ -21,9 +21,9 @@ export default async function Book(props: Props) {
   );
 
   return (
-    <main className="p-4">
+    <main className="p-4 prose max-w-none">
       <h1>Booking</h1>
-      <div className="flex flex-1 flex-wrap gap-4 items-center">
+      <div className="flex flex-wrap gap-4 items-center justify-around">
         <Map
           apiKey={process.env.GOOGLE_MAPS_API_KEY!}
           facilities={facilitiesBookings}
