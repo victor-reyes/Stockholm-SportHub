@@ -10,21 +10,31 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { FACILITIES } from "@/data";
 import Form from "next/form";
 import { searchAction } from "./actions";
 import { Combobox } from "./facility-combobox";
 import { useState } from "react";
 import { X } from "lucide-react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { FacilitySelect } from "@/features/book/types";
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as const;
 
-type Facility = { id: string; text: string };
-export function CardForm() {
-  const [selectedFacilities, setSelectedFacilities] = useState<Facility[]>([]);
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+type Props = {
+  allFacilities: FacilitySelect[];
+  facilities: FacilitySelect[];
+  stockholmDate: string;
+  stockholmTime: string;
+};
+export function CardForm({
+  allFacilities,
+  facilities,
+  stockholmDate,
+  stockholmTime,
+}: Props) {
+  const [selectedFacilities, setSelectedFacilities] = useState(facilities);
+  const [date, setDate] = useState(stockholmDate);
+  const [time, setTime] = useState(stockholmTime);
 
   return (
     <Card className="max-w-sm m-auto">
@@ -43,12 +53,28 @@ export function CardForm() {
           className="flex flex-col gap-4"
         >
           <Combobox
-            items={[...FACILITIES]}
+            items={allFacilities.map((facility) => ({
+              id: facility.id.toString(),
+              name: facility.name,
+              description: facility.description,
+            }))}
             triggerText="Select facility"
             searchPlaceholder="Search facility..."
             emptyText="No facilities found"
-            selectedItems={selectedFacilities}
-            onItemsSelect={setSelectedFacilities}
+            selectedItems={selectedFacilities.map((facility) => ({
+              id: facility.id.toString(),
+              name: facility.name,
+              description: facility.description,
+            }))}
+            onItemsSelect={(items) => {
+              setSelectedFacilities(
+                items.map((item) => ({
+                  id: parseInt(item.id),
+                  name: item.name,
+                  description: item.description,
+                })),
+              );
+            }}
           />
           {selectedFacilities.length > 0 && (
             <ScrollArea className="whitespace-nowrap">
@@ -64,10 +90,10 @@ export function CardForm() {
                     }}
                   >
                     <X strokeWidth={3} />
-                    {facility.text}
+                    {facility.name}
                     <Input
                       name="facility"
-                      value={facility.text}
+                      value={facility.name}
                       type="hidden"
                     />
                   </Button>

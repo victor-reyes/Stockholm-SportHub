@@ -27,7 +27,7 @@ type Props<T> = {
   onItemsSelect?: (items: T[]) => void;
 };
 
-export function Combobox<T extends { id: string; text: string }>({
+export function Combobox<T extends { id: string; name: string }>({
   items,
   triggerText,
   searchPlaceholder,
@@ -49,11 +49,10 @@ export function Combobox<T extends { id: string; text: string }>({
   }, [open]);
 
   const handleSelect = (itemId: string) => {
-    const item = items.find((f) => f.id === itemId)!;
-
+    const item = items.find((i) => i.id === itemId)!;
     onItemsSelect?.(
-      selectedItems.includes(item)
-        ? selectedItems.filter((f) => f !== item)
+      selectedItems.some((i) => i.id === item.id)
+        ? selectedItems.filter((i) => i !== item)
         : [...selectedItems, item],
     );
   };
@@ -83,7 +82,7 @@ export function Combobox<T extends { id: string; text: string }>({
                     onSelect={handleSelect}
                   >
                     <CheckItem isChecked={true} />
-                    {item.text}
+                    {item.name}
                   </CommandItem>
                 ))}
               </CommandGroup>
@@ -97,7 +96,7 @@ export function Combobox<T extends { id: string; text: string }>({
             <CommandGroup>
               {items
                 .filter((item) =>
-                  item.text.toLowerCase().includes(search.toLowerCase()),
+                  item.name.toLowerCase().includes(search.toLowerCase()),
                 )
                 .map((item) => (
                   <CommandItem
@@ -105,8 +104,10 @@ export function Combobox<T extends { id: string; text: string }>({
                     value={item.id}
                     onSelect={handleSelect}
                   >
-                    <CheckItem isChecked={selectedItems.includes(item)} />
-                    {item.text}
+                    <CheckItem
+                      isChecked={selectedItems.some((i) => i.id === item.id)}
+                    />
+                    {item.name}
                   </CommandItem>
                 ))}
             </CommandGroup>
