@@ -1,4 +1,5 @@
 import { service } from "@/features";
+import { TimeSlotItem } from "./time-slot-item";
 
 type Props = {
   fromTimestamp: Date;
@@ -26,12 +27,9 @@ export async function Facilities({
         {facilities.map((facility) => (
           <li key={facility.id}>
             {facility.name}
-            <ul>
-              {facility.bookings.map((booking) => (
-                <li key={booking.id}>
-                  {booking.startTimestamp.toLocaleString()} -{" "}
-                  {booking.endTimestamp.toLocaleString()}
-                </li>
+            <ul className="not-prose space-y-2">
+              {facility.timeSlots.map((timeSlot, index) => (
+                <TimeSlotItem key={index} timeSlot={timeSlot} />
               ))}
             </ul>
           </li>
