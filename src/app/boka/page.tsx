@@ -12,6 +12,13 @@ type Props = {
 export default async function Book(props: Props) {
   const { date, time, allFacilities, facilities } = await handleProps(props);
 
+  const facilitiesBookings = await service.getFalicityBookings(
+    new Date(`${date}T${time}:00Z`),
+    undefined,
+    facilities.map((f) => f.id),
+    undefined,
+  );
+
   return (
     <main className="p-4">
       <h1>Booking</h1>
@@ -21,10 +28,7 @@ export default async function Book(props: Props) {
         stockholmDate={date}
         stockholmTime={time}
       />
-      <Facilities
-        fromTimestamp={new Date(`${date}T${time}:00Z`)}
-        facilityIds={facilities.map((f) => f.id)}
-      />
+      <Facilities facilities={facilitiesBookings} />
     </main>
   );
 }

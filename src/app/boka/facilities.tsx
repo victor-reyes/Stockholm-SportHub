@@ -1,25 +1,12 @@
 import { service } from "@/features";
 import { TimeSlotItem } from "./time-slot-item";
+import { FacilitiesBookingWithTimeSlots } from "@/features/book/types";
 
 type Props = {
-  fromTimestamp: Date;
-  toTimeStamp?: Date;
-  facilityIds?: number[];
-  sportIds?: number[];
+  facilities: FacilitiesBookingWithTimeSlots[];
 };
 
-export async function Facilities({
-  fromTimestamp,
-  toTimeStamp,
-  facilityIds,
-  sportIds,
-}: Props) {
-  const facilities = await service.getFalicityBookings(
-    fromTimestamp,
-    toTimeStamp,
-    facilityIds,
-    sportIds,
-  );
+export function Facilities({ facilities }: Props) {
   return (
     <div>
       <h2>Facilities</h2>

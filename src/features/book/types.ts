@@ -27,3 +27,8 @@ export type TimeSlot = {
   durationInMin: number;
   state: "free" | "booked" | "unavailable";
 };
+
+export type FacilitiesBookingWithTimeSlots = FacilitySelect & {
+  timeSlots: TimeSlot[];
+  bookings: BookingSelect[];
+};
