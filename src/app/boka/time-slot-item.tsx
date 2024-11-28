@@ -61,7 +61,7 @@ const useFormattedDateTime = (date: Date) => {
   };
 
   useEffect(() => {
-    setFormattedDate(new Date(date).toLocaleTimeString("sv-SE"));
+    setFormattedDate(new Date(date).toLocaleTimeString("sv-SE", options));
   }, [date]);
 
   return formattedDate;
