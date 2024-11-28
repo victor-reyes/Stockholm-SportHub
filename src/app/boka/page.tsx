@@ -1,7 +1,7 @@
 import { service } from "@/features";
 import { CardForm } from "./card-form";
 import { Facilities } from "./facilities";
-import { GoogleMapsEmbed } from "@next/third-parties/google";
+import { Map } from "./map";
 
 type Props = {
   searchParams?: Promise<{
@@ -19,20 +19,12 @@ export default async function Book(props: Props) {
     facilities.map((f) => f.id),
     undefined,
   );
-
+  
   return (
     <main className="p-4">
       <h1>Booking</h1>
       <div className="flex flex-1 flex-wrap gap-4 items-center">
-        <GoogleMapsEmbed
-          apiKey="AIzaSyDgOv_FCU4C2xBJw49JrxNY7kDh45NKBkY"
-          height={450}
-          width={600}
-          mode="view"
-          loading="eager"
-          zoom="12"
-          center="59.3293,18.0686"
-        />
+        <Map apiKey={process.env.GOOGLE_MAPS_API_KEY!} />
         <CardForm
           allFacilities={allFacilities}
           facilities={facilities}
