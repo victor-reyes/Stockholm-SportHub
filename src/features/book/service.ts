@@ -7,7 +7,6 @@ import {
   SportInsert,
   UserInsert,
 } from "./types";
-import { getDefaultAutoSelectFamily } from "net";
 
 function createService(repository: Repository) {
   return {
@@ -20,13 +19,16 @@ function createService(repository: Repository) {
 
     async getFalicityBookings(
       fromTimestamp: Date,
-      toTimeStamp: Date,
+      toTimestamp?: Date,
       facilityIds?: number[],
       sportIds?: number[],
     ) {
+      toTimestamp =
+        toTimestamp || new Date(new Date(fromTimestamp).setHours(23, 0));
+
       return await repository.getFalicityBookings(
         fromTimestamp,
-        toTimeStamp,
+        toTimestamp,
         facilityIds,
         sportIds,
       );
