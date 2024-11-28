@@ -13,8 +13,6 @@ export async function Facilities({
   facilityIds,
   sportIds,
 }: Props) {
-  console.log("facilityIds", facilityIds);
- console.log("Facilities", fromTimestamp);
   const facilities = await service.getFalicityBookings(
     fromTimestamp,
     toTimeStamp,
