@@ -105,15 +105,20 @@ function generateTimeSlots(bookings: BookingSelect[], date: Date) {
 
   const currentDate = new Date();
 
-  return timeSlots.map((timeSlot) => ({
-    ...timeSlot,
-    durationInMin: calculateDurationInMin(timeSlot.start, timeSlot.end),
-    state:
-      timeSlot.state === "free" &&
-      timeSlot.end.getTime() < currentDate.getTime()
-        ? "unavailable"
-        : timeSlot.state,
-  }));
+  return timeSlots
+    .map((timeSlot) => ({
+      ...timeSlot,
+      durationInMin: calculateDurationInMin(timeSlot.start, timeSlot.end),
+    }))
+    .map((timeSlot) => ({
+      ...timeSlot,
+      state:
+        (timeSlot.state === "free" &&
+          timeSlot.end.getTime() < currentDate.getTime()) ||
+        (timeSlot.state === "free" && timeSlot.durationInMin < 60)
+          ? "unavailable"
+          : timeSlot.state,
+    }));
 }
 
 function calculateDurationInMin(start: Date, end: Date) {
