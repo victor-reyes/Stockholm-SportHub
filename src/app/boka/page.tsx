@@ -1,7 +1,5 @@
 import { service } from "@/features";
-import { CardForm } from "./card-form";
-import { Facilities } from "./facilities";
-import { Map } from "./map";
+import { Bookning } from "./bookning";
 
 type Props = {
   searchParams?: Promise<{
@@ -23,19 +21,14 @@ export default async function Book(props: Props) {
   return (
     <main className="p-4 prose max-w-none">
       <h1>Booking</h1>
-      <div className="flex flex-wrap gap-4 items-center justify-around">
-        <Map
-          apiKey={process.env.GOOGLE_MAPS_API_KEY!}
-          facilities={facilitiesBookings}
-        />
-        <CardForm
-          allFacilities={allFacilities}
-          facilities={facilities}
-          stockholmDate={date}
-          stockholmTime={time}
-        />
-      </div>
-      <Facilities facilities={facilitiesBookings} />
+      <Bookning
+        apiKey={process.env.GOOGLE_MAPS_API_KEY!}
+        facilitiesBookings={facilitiesBookings}
+        allFacilities={allFacilities}
+        facilities={facilities}
+        stockholmDate={date}
+        stockholmTime={time}
+      />
     </main>
   );
 }

@@ -74,7 +74,7 @@ function mockBookings(userIds: number[], facilityIds: number[]) {
     const to = new Date(from);
     to.setDate(to.getDate() + 10);
 
-    const dates = faker.date.betweens({ from: from, to: to, count: 15 });
+    const dates = faker.date.betweens({ from: from, to: to, count: 50 });
 
     return dates.map((fromDate) => {
       const facilityId = faker.helpers.arrayElement(facilityIds);
