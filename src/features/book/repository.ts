@@ -6,7 +6,7 @@ import {
   sports,
   users,
 } from "@/db/schema";
-import { and, eq, gt, inArray, lt } from "drizzle-orm";
+import { and, asc, eq, gt, inArray, lt } from "drizzle-orm";
 import {
   BookingInsert,
   FacilitiesToSportsInsert,
@@ -38,6 +38,7 @@ export function createRepository(db: DB) {
               lt(bookings.startTimestamp, toTimestamp),
               gt(bookings.endTimestamp, fromTimestamp),
             ),
+            orderBy: asc(bookings.endTimestamp),
           },
           facilitiesSports: { with: { sport: true } },
         },
