@@ -62,16 +62,14 @@ export function CardForm({
             searchPlaceholder="Search facility..."
             emptyText="No facilities found"
             selectedItems={selectedFacilities.map((facility) => ({
+              ...facility,
               id: facility.id.toString(),
-              name: facility.name,
-              description: facility.description,
             }))}
             onItemsSelect={(items) => {
               setSelectedFacilities(
                 items.map((item) => ({
-                  id: parseInt(item.id),
-                  name: item.name,
-                  description: item.description,
+                  ...item as any,
+                  id: parseInt(item.id)
                 })),
               );
             }}
