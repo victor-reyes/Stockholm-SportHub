@@ -70,20 +70,25 @@ function Marker({ id, name, description, lat, lng }: FacilitySelect) {
         />
       </AdvancedMarker>
       {infoWindowShown && (
-        <InfoWindow anchor={marker}
-        shouldFocus={false}
-        onClose={handleClose} className="prose">
+        <InfoWindow
+          anchor={marker}
+          shouldFocus={false}
+          onClose={handleClose}
+          className="prose prose-sm max-w-sm max-h-36"
+        >
           <h1 className="font-bold">{name}</h1>
-          <div className="flex justify-between items-center">
-            <Image
-              src="/Camp_Nou_més_que_un_club.jpg"
-              width={200}
-              height={150}
-              alt={"Més que un club"}
-            />
-            <Button>Book</Button>
-          </div>
-          <p>{description}</p>
+
+          <Image
+            src="/Camp_Nou_més_que_un_club.jpg"
+            width={130}
+            height={120}
+            alt={"Més que un club"}
+            className="float-start pe-1 pb-1"
+          />
+          <p className="leading-4 tracking-tight">
+            {description}. {description}
+          </p>
+          <Button className="float-right">Book</Button>
         </InfoWindow>
       )}
     </>
