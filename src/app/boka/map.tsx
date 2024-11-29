@@ -20,10 +20,10 @@ type Props = {
 export function Map({ apiKey, facilities, onBoundsChanged = () => {} }: Props) {
   return (
     <APIProvider apiKey={apiKey}>
-      <div className="min-w-80 not-prose">
+      <div className="max-w-full w-3/4 not-prose">
         <GoogleMap
+          className="h-[440]"
           mapId={"bf51a910020fa25a"}
-          style={{ width: "600px", height: "470px" }}
           defaultZoom={11}
           defaultCenter={{ lat: 59.33258, lng: 18.0649 }}
           gestureHandling={"greedy"}

@@ -37,7 +37,7 @@ export function CardForm({
   const [time, setTime] = useState(stockholmTime);
 
   return (
-    <Card className="max-w-md">
+    <Card className="max-w-sm">
       <CardHeader>
         <CardTitle>Search Available slots</CardTitle>
         <CardDescription>
