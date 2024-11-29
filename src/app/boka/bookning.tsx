@@ -30,7 +30,7 @@ export function Bookning({
 
   return (
     <>
-      <div className="flex flex-wrap gap-4 items-center justify-around">
+      <div className="flex gap-4 flex-wrap-reverse sm:flex-nowrap items-center justify-around">
         <Map
           apiKey={apiKey}
           facilities={facilitiesBookings}
